@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+gradio
+langgraph
+langchain
+langchain-core
+langchain-nvidia-ai-endpoints
+mcp
+sqlalchemy
+python-dotenv
+pydantic
+httpx
+pytest
