@@ -7,7 +7,9 @@ import gradio as gr
 from src.orchestrator import IncidentOrchestrator
 
 
-def analyze_incident(message: str, history: list[list[str]]) -> tuple[str, list[list[str]]]:
+def analyze_incident(
+    message: str, history: list[dict[str, str]]
+) -> tuple[str, list[dict[str, str]]]:
     """
     Analyze an incident using the orchestrator.
 
@@ -21,21 +23,19 @@ def analyze_incident(message: str, history: list[list[str]]) -> tuple[str, list[
     if not message or not message.strip():
         return "", history
 
-    # Add user message to history
-    history.append([message, None])
+    history.append({"role": "user", "content": message})
 
     try:
         # Invoke orchestrator
         orchestrator = IncidentOrchestrator(require_api_key=True)
         result = orchestrator.invoke(message)
 
-        # Add assistant response to history
-        history[-1][1] = result.final_response or "No response generated"
+        response = result.final_response or "No response generated"
 
     except Exception as e:
-        error_message = f"Error analyzing incident: {str(e)}"
-        history[-1][1] = error_message
+        response = f"Error analyzing incident: {str(e)}"
 
+    history.append({"role": "assistant", "content": response})
     return "", history
 
 
@@ -64,7 +64,7 @@ def create_interface() -> gr.Blocks:
         chatbot = gr.Chatbot(
             label="Incident Analysis",
             height=500,
-            show_copy_button=True,
+            buttons=["copy"],
         )
 
         with gr.Row():

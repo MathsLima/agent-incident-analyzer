@@ -2,8 +2,6 @@
 LangGraph workflow for incident investigation orchestration.
 """
 
-from typing import Any
-
 from langgraph.graph import StateGraph, END
 
 from src.agents import (
@@ -385,4 +383,4 @@ class IncidentOrchestrator:
         """
         initial_state = IncidentState(user_request=user_request)
         final_state = self.graph.invoke(initial_state)
-        return final_state
+        return IncidentState.model_validate(final_state)
