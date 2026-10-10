@@ -17,8 +17,8 @@ Prioritize clarity, correctness, simplicity, and demonstrability over production
 Before modifying the project, read and understand:
 
 ```text
-docs/SPEC.md
-docs/PLAN.md
+sdlc/01-app-creation/SPEC.md
+sdlc/01-app-creation/PLAN.md
 README.md
 ```
 

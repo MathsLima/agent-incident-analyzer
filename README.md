@@ -79,9 +79,10 @@ SQLite
 ```text
 agent-incident-analyzer/
 │
-├── docs/
-│   ├── SPEC.md
-│   └── PLAN.md
+├── sdlc/
+│   └── 01-app-creation/
+│       ├── SPEC.md
+│       └── PLAN.md
 │
 ├── prompts/
 │   ├── orchestrator.md
@@ -133,11 +134,13 @@ Testing
 Demonstration
 ```
 
-The specification and implementation plan are available under `docs/`.
+The specification and implementation plan are available under `sdlc/01-app-creation/`.
 
 ---
 
 ## Environment Setup
+
+### Local Development
 
 Create a Python virtual environment:
 
@@ -164,6 +167,22 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
+
+### GitHub Codespaces
+
+Open the repository in GitHub Codespaces. The dev container will automatically:
+
+1. Use Python 3.11
+2. Install dependencies from `requirements.txt`
+3. Forward ports 7860 (Gradio) and 8000 (FastAPI)
+
+Inside the Codespace, create the `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+Then configure the NVIDIA NIM credentials in `.env`.
 
 ---
 

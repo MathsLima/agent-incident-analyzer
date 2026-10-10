@@ -9,5 +9,6 @@ mcp
 sqlalchemy
 python-dotenv
 pydantic
+pydantic-settings
 httpx
 pytest
