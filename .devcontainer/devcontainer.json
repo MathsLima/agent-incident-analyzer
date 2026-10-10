@@ -1,0 +1,6 @@
+{
+  "name": "Agent Incident Analyzer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "postCreateCommand": "pip install -r requirements.txt",
+  "forwardPorts": [7860, 8000]
+}
