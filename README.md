@@ -95,14 +95,41 @@ agent-incident-analyzer/
 │
 ├── src/
 │   ├── api/
+│   │   ├── app.py
+│   │   ├── models.py
+│   │   └── routes.py
 │   ├── agents/
+│   │   ├── base_agent.py
+│   │   ├── log_agent.py
+│   │   ├── api_agent.py
+│   │   ├── database_agent.py
+│   │   ├── deployment_agent.py
+│   │   ├── root_cause_agent.py
+│   │   └── action_agent.py
 │   ├── database/
+│   │   ├── connection.py
+│   │   ├── schema.py
+│   │   └── seed.py
 │   ├── llm/
+│   │   └── client.py
 │   ├── mcp/
-│   └── orchestrator/
+│   │   ├── server.py
+│   │   └── tools.py
+│   ├── orchestrator/
+│   │   ├── graph.py
+│   │   └── state.py
+│   ├── ui/
+│   │   └── gradio_app.py
+│   └── config.py
+│
+├── scripts/
+│   ├── check_config.py
+│   └── seed_database.py
 │
 ├── tests/
 │
+├── .devcontainer/
+│   └── devcontainer.json
 ├── .env.example
 ├── .gitignore
 ├── README.md
@@ -202,14 +229,38 @@ Never commit `.env` to the repository.
 
 ## Running the Application
 
-The exact startup commands will be defined as implementation progresses.
+### Step 1: Initialize the Database
 
-The final application will provide:
+```bash
+python scripts/seed_database.py
+```
 
-* FastAPI API
-* Gradio interface
-* MCP server
-* LangGraph orchestration
+This will create the SQLite database and populate it with demonstration data.
+
+### Step 2: Start the Gradio Interface
+
+```bash
+python run.py
+```
+
+The Gradio interface will be available at http://localhost:7860
+
+### Step 3: Start the FastAPI Server (Optional)
+
+```bash
+python run_api.py
+```
+
+The FastAPI API will be available at http://localhost:8000
+API documentation will be available at http://localhost:8000/docs
+
+### Step 4: Start the MCP Server (Optional)
+
+```bash
+python -m src.mcp.server
+```
+
+The MCP server will run using stdio transport for communication with MCP clients.
 
 ---
 
@@ -236,6 +287,32 @@ We started receiving many HTTP 500 errors immediately after the latest deploymen
 Different requests should result in different agent workflows.
 
 ---
+
+## Testing
+
+### Configuration Test
+
+```bash
+python scripts/check_config.py
+```
+
+This verifies that the configuration module loads correctly.
+
+### Integration Test
+
+```bash
+python scripts/test_integration.py
+```
+
+This tests database connection and MCP tools without requiring the LLM API key.
+
+### Orchestrator Test
+
+```bash
+python scripts/test_orchestrator.py
+```
+
+This tests the full orchestrator workflow with the LLM. Requires NVIDIA_API_KEY to be configured.
 
 ## Project Objective
 
